@@ -1,8 +1,8 @@
 import { Router } from 'express';
-import authRouter from './auth.js';
+import authRouter from './questionaire.js';
 
 const router = Router();
 
-router.use('/auth', authRouter);
+router.use('/questionnaire', authRouter);
 
 export default router;
