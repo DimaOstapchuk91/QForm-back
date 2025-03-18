@@ -6,11 +6,12 @@ import {
 
 export const createQuestionnaireController = async (req, res) => {
   const data = await createQuestionnaire(req.body);
+  console.log('test');
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created questionare',
-    dara: data,
+    data: data,
   });
 };
 
@@ -20,7 +21,7 @@ export const getAllQuestionnaireController = async (req, res) => {
   res.status(200).json({
     status: 200,
     message: 'Successfully get all questionares',
-    dara: result,
+    data: result,
   });
 };
 

@@ -14,13 +14,13 @@ const jsonParser = express.json();
 const router = Router();
 
 router.post(
-  '/create',
+  '/',
   jsonParser,
   validateBody(questionnaireSchema),
   ctrlWrapper(createQuestionnaireController),
 );
 
-router.get('/all', ctrlWrapper(getAllQuestionnaireController));
+router.get('/', ctrlWrapper(getAllQuestionnaireController));
 router.get('/:id', ctrlWrapper(getOneQuestionnaireController));
 
 export default router;

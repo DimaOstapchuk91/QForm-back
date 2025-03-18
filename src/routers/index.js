@@ -3,6 +3,6 @@ import authRouter from './questionaire.js';
 
 const router = Router();
 
-router.use('/questionnaire', authRouter);
+router.use('/questionnaires', authRouter);
 
 export default router;

@@ -16,16 +16,12 @@ const questionnaireSchema = new mongoose.Schema(
     },
     questions: [
       {
-        questionId: {
+        questionType: {
           type: String,
-          required: true,
-        },
-        type: {
-          type: String,
-          enum: ['text', 'single-choice', 'multiple-choice'],
+          enum: ['text', 'radio', 'checkbox'],
           required: [true, 'The question type is required'],
         },
-        text: {
+        questionText: {
           type: String,
           required: [true, 'The question text is required'],
           trim: true,

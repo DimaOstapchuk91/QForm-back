@@ -1,15 +1,12 @@
 import Joi from 'joi';
 
 const questionSchema = Joi.object({
-  questionId: Joi.string().required(),
-  type: Joi.string()
-    .valid('text', 'single-choice', 'multiple-choice')
-    .required(),
-  text: Joi.string().trim().min(3).max(500).required(),
+  questionText: Joi.string().trim().min(3).max(500).required(),
+  questionType: Joi.string().valid('text', 'radio', 'checkbox').required(),
   options: Joi.array()
     .items(Joi.string().trim().min(1).max(100))
-    .when('type', {
-      is: Joi.valid('single-choice', 'multiple-choice'),
+    .when('questionType', {
+      is: Joi.valid('radio', 'checkbox'),
       then: Joi.required(),
       otherwise: Joi.forbidden(),
     }),
