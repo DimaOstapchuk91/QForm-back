@@ -5,13 +5,13 @@ import {
 } from '../services/questionnaire.js';
 
 export const createQuestionnaireController = async (req, res) => {
-  const data = await createQuestionnaire(req.body);
+  const result = await createQuestionnaire(req.body);
   console.log('test');
 
   res.status(201).json({
     status: 201,
     message: 'Successfully created questionare',
-    data: data,
+    data: result,
   });
 };
 

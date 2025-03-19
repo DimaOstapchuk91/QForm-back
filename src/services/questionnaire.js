@@ -4,7 +4,7 @@ import { Questionnaire } from '../db/models/questionnaire.js';
 export const createQuestionnaire = async (questionnaire) => {
   const result = await Questionnaire.create(questionnaire);
 
-  if (!result) throw createHttpError(500, 'Failed to create water portion');
+  if (!result) throw createHttpError(500, 'Failed to create questionnaire');
 
   return result;
 };

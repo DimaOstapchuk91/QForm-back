@@ -1,8 +1,10 @@
 import { Router } from 'express';
-import authRouter from './questionaire.js';
+import questionnairesRouter from './questionaire.js';
+import answerRouter from './answer.js';
 
 const router = Router();
 
-router.use('/questionnaires', authRouter);
+router.use('/questionnaires', questionnairesRouter);
+router.use('/answer', answerRouter);
 
 export default router;

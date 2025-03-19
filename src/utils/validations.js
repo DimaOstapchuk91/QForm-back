@@ -27,3 +27,23 @@ export const questionnaireSchema = Joi.object({
     'any.required': 'The list of questions is required',
   }),
 });
+
+export const answerSchema = Joi.object({
+  questionnaireId: Joi.string().required().messages({
+    'string.empty': 'Questionnaire ID is required',
+    'any.required': 'Questionnaire ID is required',
+  }),
+  answers: Joi.object()
+    .pattern(
+      Joi.string(),
+      Joi.alternatives().try(
+        Joi.string().required(),
+        Joi.array().items(Joi.string().required()).min(1),
+      ),
+    )
+    .required()
+    .messages({
+      'object.base': 'Answers must be provided',
+      'any.required': 'Answers are required',
+    }),
+});

@@ -2,12 +2,12 @@ import { Router } from 'express';
 import express from 'express';
 import { ctrlWrapper } from '../utils/ctrlWrapper.js';
 import { validateBody } from '../middlewares/validateBody.js';
-import { questionnaireSchema } from '../validation/questionnaire.js';
 import {
   createQuestionnaireController,
   getAllQuestionnaireController,
   getOneQuestionnaireController,
 } from '../controllers/questionnaire.js';
+import { questionnaireSchema } from '../utils/validations.js';
 
 const jsonParser = express.json();
 
