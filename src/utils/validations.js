@@ -1,15 +1,32 @@
 import Joi from 'joi';
 
 const questionSchema = Joi.object({
-  questionText: Joi.string().trim().min(3).max(500).required(),
-  questionType: Joi.string().valid('text', 'radio', 'checkbox').required(),
-  options: Joi.array()
-    .items(Joi.string().trim().min(1).max(100))
-    .when('questionType', {
-      is: Joi.valid('radio', 'checkbox'),
-      then: Joi.required(),
-      otherwise: Joi.forbidden(),
+  questionText: Joi.string().trim().min(3).max(300).required().messages({
+    'string.min': 'The question must be at least 3 characters long',
+    'string.max': 'The question must be no more than 300 characters long',
+    'any.required': 'The question text is required',
+  }),
+  questionType: Joi.string()
+    .valid('text', 'radio', 'checkbox')
+    .required()
+    .messages({
+      'any.only': 'Question type must be one of text, radio, or checkbox',
+      'any.required': 'The question type is required',
     }),
+  options: Joi.when('questionType', {
+    is: Joi.valid('radio', 'checkbox'),
+    then: Joi.array()
+      .items(Joi.string().trim().min(1).required())
+      .min(1)
+      .messages({
+        'array.min': 'At least one option is required for this question type',
+        'string.min': 'Each option must contain at least one character',
+        'any.required': 'Options are required for this question type',
+      }),
+    otherwise: Joi.array().max(0).messages({
+      'array.max': 'Options are not allowed for text questions',
+    }),
+  }),
 });
 
 export const questionnaireSchema = Joi.object({

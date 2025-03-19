@@ -30,7 +30,10 @@ const questionnaireSchema = new mongoose.Schema(
           type: [String],
           validate: {
             validator: function (arr) {
-              return this.type !== 'text' ? arr.length > 0 : true;
+              if (this.questionType === 'text') {
+                return true; // Для текстового питання опції не потрібні
+              }
+              return arr && arr.length > 0; // Для "radio" і "checkbox" опції мають бути
             },
             message:
               'Answer choices are required for single-choice and multiple-choice questions',

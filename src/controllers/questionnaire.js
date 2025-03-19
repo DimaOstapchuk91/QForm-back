@@ -6,7 +6,7 @@ import {
 
 export const createQuestionnaireController = async (req, res) => {
   const result = await createQuestionnaire(req.body);
-  console.log('test');
+  console.log('test create');
 
   res.status(201).json({
     status: 201,
