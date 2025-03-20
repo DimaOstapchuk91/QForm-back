@@ -30,7 +30,6 @@ export const getAllQuestionnaireController = async (req, res) => {
 export const getOneQuestionnaireController = async (req, res) => {
   const { id } = req.params;
   const result = await getOneQuestionnaire(id);
-  console.log('success get one');
 
   res.status(200).json({
     status: 200,
@@ -42,7 +41,6 @@ export const getOneQuestionnaireController = async (req, res) => {
 export const updateQuestionnaireController = async (req, res) => {
   const { id } = req.params;
   const result = await updateQuestionnaire(id, req.body);
-  console.log('success get one');
 
   res.status(201).json({
     status: 201,
@@ -54,7 +52,6 @@ export const updateQuestionnaireController = async (req, res) => {
 export const deleteQuestionnaireController = async (req, res) => {
   const { id } = req.params;
   const result = await deleteQuestionnaire(id);
-  console.log('success dell');
 
   res.status(201).json({
     status: 201,
