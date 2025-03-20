@@ -1,6 +1,7 @@
 import Joi from 'joi';
 
 const questionSchema = Joi.object({
+  _id: Joi.string().optional(), // Дозволяємо _id, але не вимагаємо
   questionText: Joi.string().trim().min(3).max(300).required().messages({
     'string.min': 'The question must be at least 3 characters long',
     'string.max': 'The question must be no more than 300 characters long',

@@ -25,3 +25,29 @@ export const getOneQuestionnaire = async (id) => {
 
   return result;
 };
+
+export const updateQuestionnaire = async (itemId, newQuestionnaire) => {
+  const result = await Questionnaire.findOneAndUpdate(
+    { _id: itemId },
+    newQuestionnaire,
+    {
+      new: true,
+      runValidators: true,
+    },
+  );
+
+  if (!result)
+    throw createHttpError(404, `Questionnaire with ID ${itemId} not found`);
+
+  return result;
+};
+
+export const deleteQuestionnaire = async (itemId) => {
+  const result = await Questionnaire.findOneAndDelete({ _id: itemId });
+
+  if (!result) {
+    throw createHttpError(404, `Water portion with ID ${itemId} not found.`);
+  }
+
+  return result._id;
+};
