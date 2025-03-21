@@ -1,3 +1,4 @@
+import createHttpError from 'http-errors';
 import {
   createQuestionnaire,
   deleteQuestionnaire,
@@ -5,6 +6,8 @@ import {
   getOneQuestionnaire,
   updateQuestionnaire,
 } from '../services/questionnaire.js';
+import { parsePaginationParams } from '../utils/parsePaginatiomParams.js';
+import { parseSortParams } from '../utils/parseSortParams.js';
 
 export const createQuestionnaireController = async (req, res) => {
   const result = await createQuestionnaire(req.body);
@@ -18,7 +21,17 @@ export const createQuestionnaireController = async (req, res) => {
 };
 
 export const getAllQuestionnaireController = async (req, res) => {
-  const result = await getAllQuestionnaire();
+  const { page, perPage } = parsePaginationParams(req.query);
+  const { sortBy, sortOrder } = parseSortParams(req.query);
+
+  const result = await getAllQuestionnaire({
+    page,
+    perPage,
+    sortBy,
+    sortOrder,
+  });
+
+  if (!result) throw createHttpError(404, 'Questionnaires not found.');
 
   res.status(200).json({
     status: 200,

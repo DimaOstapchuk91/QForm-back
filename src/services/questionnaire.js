@@ -1,5 +1,6 @@
 import createHttpError from 'http-errors';
 import { Questionnaire } from '../db/models/questionnaire.js';
+import { calculatePaginationData } from '../utils/calculatePaginationData.js';
 
 export const createQuestionnaire = async (questionnaire) => {
   const result = await Questionnaire.create(questionnaire);
@@ -9,13 +10,28 @@ export const createQuestionnaire = async (questionnaire) => {
   return result;
 };
 
-export const getAllQuestionnaire = async () => {
-  const result = await Questionnaire.find();
-  console.log('test all ques');
+export const getAllQuestionnaire = async ({
+  page,
+  perPage,
+  sortBy,
+  sortOrder,
+}) => {
+  const skip = page > 0 ? (page - 1) * perPage : 0;
 
-  if (!result) throw createHttpError(404, 'Questionnaires not found.');
+  const questionnaireQuery = Questionnaire.find();
 
-  return result;
+  const [totalContacts, questionnaires] = await Promise.all([
+    Questionnaire.find().merge(questionnaireQuery).countDocuments(),
+    questionnaireQuery
+      .skip(skip)
+      .limit(perPage)
+      .sort({ [sortBy]: sortOrder })
+      .exec(),
+  ]);
+
+  const paginationData = calculatePaginationData(totalContacts, page, perPage);
+
+  return { data: questionnaires, ...paginationData };
 };
 
 export const getOneQuestionnaire = async (id) => {
